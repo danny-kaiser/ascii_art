@@ -84,26 +84,23 @@ def convertToAscii(fileName, cols, scale, moreLevels):
     return aimg
 
 
-# main() function
 def main():
-    # create parser
     descStr = "This program converts an image into ASCII art."
     parser = argparse.ArgumentParser(description=descStr)
-    # add expected arguments
+
     parser.add_argument("--file", dest="imgFile", required=True)
     parser.add_argument("--scale", dest="scale", required=False)
     parser.add_argument("--out", dest="outFile", required=False)
     parser.add_argument("--cols", dest="cols", required=False)
     parser.add_argument("--moreLevels", dest="moreLevels", action="store_true")
-    # parse args
+
     args = parser.parse_args()
     imgFile = args.imgFile
     # set output file
     outFile = "out.txt"
     if args.outFile:
         outFile = args.outFile
-    # set a scale default as 0.43
-    # a Courier font
+    # set a scale default as 0.43 which suits a Courier font
     scale = 0.43
     if args.scale:
         scale = float(args.scale)
