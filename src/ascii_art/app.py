@@ -2,6 +2,7 @@
 import sys, random, argparse
 import numpy as np
 import math
+import vid2frame
 
 from PIL import Image
 
@@ -84,43 +85,49 @@ def convertToAscii(fileName, cols, scale, moreLevels):
     return aimg
 
 
-def main():
-    descStr = "This program converts an image into ASCII art."
-    parser = argparse.ArgumentParser(description=descStr)
-
-    parser.add_argument("--file", dest="imgFile", required=True)
-    parser.add_argument("--scale", dest="scale", required=False)
-    parser.add_argument("--out", dest="outFile", required=False)
-    parser.add_argument("--cols", dest="cols", required=False)
-    parser.add_argument("--moreLevels", dest="moreLevels", action="store_true")
-
-    args = parser.parse_args()
-    imgFile = args.imgFile
-    # set output file
-    outFile = "out.txt"
-    if args.outFile:
-        outFile = args.outFile
-    # set a scale default as 0.43 which suits a Courier font
-    scale = 0.43
-    if args.scale:
-        scale = float(args.scale)
-    # set cols
-    cols = 80
-    if args.cols:
-        cols = int(args.cols)
-    print("generating ASCII art...")
-    # convert image to ascii art
-    aimg = convertToAscii(imgFile, cols, scale, args.moreLevels)
-    # open file
-    f = open(outFile, "w")
-    # write to file
-    for row in aimg:
-        f.write(row + "/n")
-    # cleanup
-    f.close()
-    print("ASCII art written to %s" % outFile)
+def main(vidfile, scale=0.43, cols=80, morelevels=True):
+    vid2frame.framecapture(vidfile)
 
 
-# call main
-if __name__ == "__main__":
-    main()
+main("../../videos/best-nope.mp4")
+
+# def main():
+#     descStr = "This program converts an image into ASCII art."
+#     parser = argparse.ArgumentParser(description=descStr)
+#
+#     parser.add_argument("--file", dest="imgFile", required=True)
+#     parser.add_argument("--scale", dest="scale", required=False)
+#     parser.add_argument("--out", dest="outFile", required=False)
+#     parser.add_argument("--cols", dest="cols", required=False)
+#     parser.add_argument("--moreLevels", dest="moreLevels", action="store_true")
+#
+#     args = parser.parse_args()
+#     imgFile = args.imgFile
+#     # set output file
+#     outFile = "out.txt"
+#     if args.outFile:
+#         outFile = args.outFile
+#     # set a scale default as 0.43 which suits a Courier font
+#     scale = 0.43
+#     if args.scale:
+#         scale = float(args.scale)
+#     # set cols
+#     cols = 80
+#     if args.cols:
+#         cols = int(args.cols)
+#     print("generating ASCII art...")
+#     # convert image to ascii art
+#     aimg = convertToAscii(imgFile, cols, scale, args.moreLevels)
+#     # open file
+#     f = open(outFile, "w")
+#     # write to file
+#     for row in aimg:
+#         f.write(row + "/n")
+#     # cleanup
+#     f.close()
+#     print("ASCII art written to %s" % outFile)
+#
+#
+# # call main
+# if __name__ == "__main__":
+#     main()
