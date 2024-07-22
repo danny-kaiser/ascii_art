@@ -2,7 +2,7 @@
 
 Next up:
 
-text2image needs to take the strings from frame2text and write them to gif images
+text2image needs to take the strings from frame2text and write them to gif images, I'm also ready to set up the frontend and reach the point where I can upload videos through it. 
 
 Notes:
 
@@ -30,8 +30,10 @@ vid2frame - OpenCV extracts frames into a folder called frames. The frames are n
 
 frame2text - An image is loaded and it is converted to greyscale. Its dimensions are stored and it is divided into tiles based on the number of columns specified. A list is initialized and each row of tiles is represented as a subsequent string of characters in that list. The function returns the list. Might need to tweak the parameters or offer them as options in the UI.
 
-text2image - Using PIL to initiate an image. The MODE for black and white will be "1" and the SIZE will be a tuple of integers inherited from the size of the video input.
+text2image - Using PIL to initiate an image. The MODE for black and white will be "1" and the SIZE will be a tuple of integers inherited from the size of the video input. Or perhaps SIZE will be inherited from the amount of space that the characters will take up. Let's try 6px per row/column.
 
 image2vid - compiles images into a video
 
-NOTE - tile height is determined by applying the image scale to the tile height. so each tile has the same scale as the total image. this should generate an equal number of rows and columns but it will distort the scale because the characters are perfect squares. Perhaps I can introduce spacing on the ascii images that will preserve the original dimensions. 
+frontend - I might initiate text at (0, 0) on my images, so I might want to add padding to the file in JS
+
+NOTE - tile height is determined by applying the image scale to the tile height. perhaps I'll add a scale option to the UI so I can play with it and decide if there's a setting that optimized for monospaced fonts like courier. 
