@@ -2,6 +2,7 @@
 import sys, random, argparse
 import numpy as np
 import math
+from pathlib import Path
 
 from PIL import Image
 
@@ -24,7 +25,7 @@ def getAverageL(image):
     return np.average(im.reshape(w * h))
 
 
-def convertToAscii(fileName, cols, scale, moreLevels):
+def get_ascii(imgfile, outfile, scale=0.43, cols=80, morelevels=True):
     """
     Given Image and dimensions (rows, cols) returns an m*n list of Images
     """
@@ -32,7 +33,7 @@ def convertToAscii(fileName, cols, scale, moreLevels):
     global gscale1, gscale2
 
     # open image and convert to greyscale
-    image = Image.open(fileName).convert("L")
+    image = Image.open(imgfile).convert("L")
     # store dimensions of file
     W, H = image.size[0], image.size[1]
     # compute width of tile
@@ -73,28 +74,25 @@ def convertToAscii(fileName, cols, scale, moreLevels):
             # get average luminance
             avg = int(getAverageL(img))
             # look up ascii characters
-            if moreLevels:
+            if morelevels:
                 gsval = gscale1[int((avg * 69) / 255)]
             else:
                 gsval = gscale2[int((avg * 9) / 255)]
             # append ascii char to string
             aimg[j] += gsval
-    # return txt image
-    return aimg
+    return aimg, rows
 
 
-def main(imgfile, outfile, scale=0.43, cols=80, morelevels=True):
+def convert2ascii(imgfile, outfile, scale=0.43, cols=80, morelevels=True):
     outfile = str(outfile)
     scale = float(scale)
     cols = int(cols)
-    # calls convertToAscii, passing any parameters
-    aimg = convertToAscii(imgfile, cols, scale, morelevels)
-    # open file
-    f = open(outFile, "w")
-    # write to file
-    for row in aimg:
-        f.write(row + "/n")
-    # cleanup
+
+    file_path = Path(outfile)
+    aimg, rows = get_ascii(imgfile, outfile)  # add more parameters in here if desired
+    with file_path.open("w") as f:
+        for row in aimg:
+            f.write(row + "/n")
     f.close()
     return (cols, rows)
 

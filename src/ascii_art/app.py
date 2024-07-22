@@ -1,6 +1,6 @@
 from flask import Flask
 from pathlib import Path
-from scripts import text2image as t2i
+from scripts import text2image, frame2text
 
 app = Flask(__name__)
 
@@ -22,4 +22,4 @@ def submit():
     return "<p>Submission</p>"
 
 
-t2i.create_image((200, 200))
+text2image.create_image((600, 600), "../../strings/punterstring.txt")
