@@ -4,7 +4,7 @@ Next up:
 
 I want to make sure that my script checks for the necessary directories and makes them if missing. I think that was throwing errors when writing a new file in frame2text.
 
-frame2text seems to be functioning now, text2image needs to extract the strings line by line from .txt files and write them onto a new .gif. I'm also ready to set up the frontend and reach the point where I can upload videos through it. 
+frame2text seems to be functioning now, text2image needs to extract the strings line by line from .txt files and write them onto a new .gif. The font looks chunky, I might need to find a new one. I'm ready to set up the frontend and reach the point where I can upload videos through it. 
 
 Notes:
 

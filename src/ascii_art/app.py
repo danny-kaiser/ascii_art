@@ -16,10 +16,15 @@ def submit():
     # outfile will be ../../strings/outfile_name.txt
     # each tuple is compared to a variable, if dims change an error is thrown
     # the columns and rows will be used to determine the size of the next image
-    # I'll start with 6pt font, the image will be sized accordingly
+    # textwrap will help format text to image
+    # I found a stackoverflow post with a script to measure the image and text
     # sends each string to text2image
     # calls image2vid
     return "<p>Submission</p>"
 
 
-text2image.create_image((600, 600), "../../strings/punterstring.txt")
+# columns, rows = frame2text.convert2ascii(
+#     "../../images/punter.jpg", "../../strings/punterstring.txt"
+# )
+
+text2image.create_image("../../strings/punterstring.txt", columns=80, rows=45)

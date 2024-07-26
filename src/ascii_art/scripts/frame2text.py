@@ -8,8 +8,8 @@ from PIL import Image
 
 # defining greyscale values
 
-# 70 levels of grey
-gscale1 = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
+# 69 levels of grey
+gscale1 = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvuxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
 
 # 10 levels of grey
 gscale2 = "@%#*+=-:. "
@@ -75,7 +75,7 @@ def get_ascii(imgfile, outfile, scale=0.43, cols=80, morelevels=True):
             avg = int(getAverageL(img))
             # look up ascii characters
             if morelevels:
-                gsval = gscale1[int((avg * 69) / 255)]
+                gsval = gscale1[int((avg * 68) / 255)]
             else:
                 gsval = gscale2[int((avg * 9) / 255)]
             # append ascii char to string
