@@ -2,9 +2,13 @@
 
 Next up:
 
+I want to sketch out the flow for the html requests
+
 I want to make sure that my script checks for the necessary directories and makes them if missing. I think that was throwing errors when writing a new file in frame2text.
 
-frame2text seems to be functioning now, text2image needs to extract the strings line by line from .txt files and write them onto a new .gif. The font looks chunky, I might need to find a new one. I'm ready to set up the frontend and reach the point where I can upload videos through it. 
+text2image is now set up to neatly format text for a particular font at a particular size, it might be nice to make it universal by using the tool that I checked the size with. but I fudged the amount of space between rows, I think I arbitrarily found 2 to be the correct amount to add in for each(?) line.
+
+I'm ready to set up the frontend and reach the point where I can upload videos through it. 
 
 Notes:
 

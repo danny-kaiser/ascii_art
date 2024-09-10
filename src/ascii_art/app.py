@@ -1,30 +1,33 @@
-from flask import Flask
+from flask import Flask, render_template
 from pathlib import Path
-from scripts import text2image, frame2text
+from scripts import vid2frame, frame2text, text2image
 
 app = Flask(__name__)
 
 
+@app.route("/", methods=[])
+def home():
+    return render_template("index.html")
+
+
 @app.route("/api/submit/", methods=["POST", "GET"])
 def submit():
-    # might need to create directories for writing files into
-    # receives a video file, maybe also some paramaters like columns and scale
-    # registers the file dimensions to a variable
-    # calls vid2frame
-    # sends each extracted frame to frame2text.main(...)
-    # frame2text.main(...) returns tuple (cols, rows) for each string
-    # outfile will be ../../strings/outfile_name.txt
-    # each tuple is compared to a variable, if dims change an error is thrown
-    # the columns and rows will be used to determine the size of the next image
-    # textwrap will help format text to image
-    # I found a stackoverflow post with a script to measure the image and text
-    # sends each string to text2image
-    # calls image2vid
-    return "<p>Submission</p>"
+    inputname = "baratiddies"  # will be received from frontend
+    inputextension = ".mp4"  # will be received from frontend
+    outputextension = ".gif"
+    column_number_choice = 120  # will be received from frontend, implement error
+    # line 51 of frame2text has a print statement for column amount error
 
+    vid2frame.framecapture("../../videos/" + inputname + inputextension)
 
-# columns, rows = frame2text.convert2ascii(
-#     "../../images/punter.jpg", "../../strings/punterstring.txt"
-# )
+    framedirectory = "../../frames/"
+    framepathlist = Path(framedirectory).relative_to(".").rglob("*")
+    for path in sorted(framepathlist):
+        newpath = Path("../../strings/" + str(path)[13:-3] + "txt")
+        columns, rows = frame2text.convert2ascii(path, newpath, column_number_choice)
+        path.unlink(missing_ok=False)
+    pass
 
-text2image.create_image("../../strings/punterstring.txt", columns=80, rows=45)
+    text2image.animate_gif(
+        "../../gifs/" + inputname + outputextension, columns=columns, rows=rows
+    )

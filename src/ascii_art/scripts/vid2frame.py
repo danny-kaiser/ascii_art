@@ -7,9 +7,9 @@ def framecapture(path, dest="../../frames/"):
     path_to_save = os.path.relpath(dest)
 
     current_frame = 1
+    # using length to represent powers of 10 to prevent more than 999 frames
     current_frame_mag = len(str(current_frame))
-    current_zeroes = "0" * (4 - current_frame_mag)
-    # using powers of 10 to prevent more than 999 frames
+    current_zeroes = "0" * (4 - current_frame_mag)  # for naming
     if current_frame_mag > 3:
         print("Error -- video is too long")
         return
@@ -30,17 +30,3 @@ def framecapture(path, dest="../../frames/"):
             break
     cap.release()
     print("done")
-
-
-# import cv2
-#
-#
-# def framecapture(path):
-#     vidobj = cv2.VideoCapture(path)
-#     count = 0
-#     success = 1
-#
-#     while success:
-#         success, image = vidobj.read()
-#         cv2.imwrite("frame%d.jpg" % count, image)
-#         count += 1

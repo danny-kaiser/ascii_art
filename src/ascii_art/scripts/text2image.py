@@ -1,17 +1,19 @@
 from PIL import Image, ImageDraw, ImageFont
-import textwrap
+from pathlib import Path
 
 # def draw_multi_line_text(image, text_file, font, text_color, columns):
 # with open(text_file) as file:
 #     raw_text = file.read()
 
+animation_list = []
+
 
 def create_image(text_file, columns, rows):
     margin = offset = 10
     spacebetween = 2
-    spacesbetween = rows - 1
+    spacebetweennumber = rows - 1
     image_width = columns * 5 + margin * 2
-    image_height = rows * 9 + spacebetween * spacesbetween + margin * 2
+    image_height = rows * 9 + spacebetween * spacebetweennumber + margin * 2
 
     # loading text file and splitting the string on newlines
     with open(text_file) as file:
@@ -25,8 +27,25 @@ def create_image(text_file, columns, rows):
 
     # iteratively writing lines to background image
     for line in lines:
-        width, height = fnt.getsize(line)
+        left, right, top, bottom = fnt.getbbox(line)
         draw.text((margin, offset), line, fill="black", font=fnt)
-        offset += height
-    img.show()
-    pass
+        offset += bottom
+    # img.save(outfile)
+    return img
+
+
+def animate_gif(gifpath, columns, rows):
+    stringdirectory = "../../strings/"
+    stringpathlist = Path(stringdirectory).relative_to(".").rglob("*")
+    for path in sorted(stringpathlist):
+        animation_list.append(create_image(path, columns, rows))
+        path.unlink(missing_ok=False)
+    # need to check if the file exists before saving
+    animation_list[0].save(
+        gifpath,
+        save_all=True,
+        append_images=animation_list[1:],
+        optimize=False,
+        duration=40,  # 40 for normal videos, 100 for slowmo
+        loop=0,
+    )
